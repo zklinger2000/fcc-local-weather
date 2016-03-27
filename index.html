@@ -4,10 +4,11 @@
   <meta charset="utf-8">
   <title>Zack Klinger, Web Developer, Portland, OR</title>
   <!-- load picturefill library -->
-<!--  <script src="/lib/picturefill.min.js" async></script>-->
   <script src="https://code.jquery.com/jquery-2.2.2.js" integrity="sha256-4/zUCqiq0kqxhZIyp4G0Gk+AOtCJsY1TA00k5ClsZYE=" crossorigin="anonymous"></script>
   <!-- link to Font Awesome stylesheet -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- link to Weather Icons stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
   <!-- link to main stylesheet -->
   <link rel="stylesheet" type="text/css" href="css/main.css" />
   <!-- Unica One font -->
@@ -26,13 +27,19 @@
             <div class="wind-speed">23</div>
             <div class="wind-units">mph</div>
           </div>
-          <div class="clouds"><i class="fa fa-sun-o"></i></div>
+          <div class="clouds"><i class="wi"></i></div>
         </div>
       </div>
       <div class="city">Portland, OR</div>
+      <div class="time">10:55 pm</div>
     </div>
   </div>
   <script>
+    var weatherIcons = {
+      Clouds: "wi-cloudy",
+      Rain: "wi-rain",
+      Clear: "wi-day-sunny"
+    }
     $(document).ready(function() {
       $.ajax({
         url: 'http://api.openweathermap.org/data/2.5/find',
@@ -52,10 +59,13 @@
       // Success callback
       function success(data) {
         console.log(data);
-        $(".city").text(data.list[0].name);
+        setUI(data);
       }
       // Set weather-main class
- 
+      function setUI(data) {
+        $(".city").text(data.list[0].name);
+        $(".clouds").html('<i class="wi ' + weatherIcons[data.list[0].weather[0].main] + '"></i>')
+      }
     });
   </script>
 </body>
