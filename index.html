@@ -19,6 +19,7 @@
 <body>
   <div class="content-wrapper clear">
     <div class="flex-wrapper">
+      <div class="time"></div>
       <div class="temperature">
         <div class="degrees">12º</div>
         <div class="secondary-temp-info">
@@ -31,7 +32,6 @@
         </div>
       </div>
       <div class="city">Portland, OR</div>
-      <div class="time">99:99 pm</div>
     </div>
   </div>
   <script>
@@ -40,24 +40,51 @@
       Rain: "wi-rain",
       Clear: "wi-day-sunny"
     }
-    var lon = -122.3787;
-    var lat = 45.4741;
+    var coords = {
+      longitude: -122.645198,
+      latitude: 45.5170543
+    };
+
     $(document).ready(function() {
-      // Initialize weather data
-      getWeatherByLocation(lon, lat);
-      // Fade in flex-wrapper element
-      setTimeout(function() {
-        $(".flex-wrapper").fadeTo("slow", 1);
-      }, 2000);
+      $(".time").text(new Date().toLocaleTimeString());
+      $(".time").fadeTo("slow", 1);
+      setInterval(function(cancel) {
+        $(".time").text(new Date().toLocaleTimeString());
+      }, 1000);
       
-      // Add listener to toggle temp-units
-      $(".temp-units").on("click", function(event) {
-        getWeatherByLocation(lon, lat);
-      });
+      refreshWeather();
       
       //===========
       // Functions
       //===========
+      
+      // Refresh weather info
+      function refreshWeather() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            coords = position.coords;
+            // Initialize weather data
+            getWeatherByLocation(coords.longitude, coords.latitude);
+            // Fade in flex-wrapper element
+            setTimeout(function() {
+              $(".temperature").fadeTo("slow", 1);
+              $(".city").fadeTo("slow", 1);
+            }, 2000);
+          });
+        } else {
+          // Initialize weather data
+          getWeatherByLocation(coords.longitude, coords.latitude);
+          // Fade in flex-wrapper element
+          setTimeout(function() {
+            $(".temperature").fadeTo("slow", 1);
+            $(".city").fadeTo("slow", 1);
+          }, 2000);
+        }
+        // Add listener to toggle temp-units
+        $(".temp-units").on("click", function(event) {
+          getWeatherByLocation(coords.longitude, coords.latitude);
+        });
+      }
       
       // Call Openweather API and update UI
       function getWeatherByLocation(lon, lat) {
@@ -80,8 +107,6 @@
       
       // Success callback
       function success(data) {
-//        var $units = $(this).text();
-        // toggle units and make new call to weather API
         var $tempUnits = $(".temp-units").text();
         toggleTempUnits($tempUnits, data);
         setUI(data, $tempUnits);
@@ -111,11 +136,12 @@
       
       // Toggle temp units
       function toggleTempUnits(units, data) {
+        // Fade out elements
         $(".temp-units").fadeTo(1000, 0);
         $(".degrees").fadeTo(1000, 0);
         $(".wind-units").fadeTo(1000, 0);
         $(".wind-speed").fadeTo(1000, 0);
-        
+        // Update  and fade elements back in
         setTimeout(function(){
           $(".wind-units").text($(".wind-units").text() === 'mph' ? 'mps' : 'mph');          
           $(".temp-units").text('c' === units.toLowerCase() ? 'F' : 'C');          
