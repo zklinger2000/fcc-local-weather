@@ -7,20 +7,26 @@
 body {
   font-family: 'Vollkorn', serif;
   color: #eee;
+  background: #333;
   background-color: #333;
   font-size: 1.2em;
   text-align: center;
+}
+body.snow{
+  background: url('https://pixabay.com/static/uploads/photo/2016/03/04/16/03/snowflakes-1236245_960_720.jpg') no-repeat top center ;
+  background-size: cover;
+  overflow: hidden;
+  min-height: 100vh;
 }
 .degrees, .temp-units, .clock, .wind-speed, .wind-units, .time {
   font-family: 'Unica One', cursive;
 }
 .degrees {
   font-size: 6em;
-  text-shadow: 8px 10px 10px rgba(0,0,0,0.6);
-}
-
-.temp-units, .clouds, .city, .wind-speed, .wind-units, .time {
   text-shadow: 6px 8px 8px rgba(0,0,0,0.6);
+}
+.temp-units, .clouds, .city, .wind-speed, .wind-units, .time {
+  text-shadow: 3px 4px 4px rgba(0,0,0,0.6);
 }
 .temp-units {
   font-size: 2em;
@@ -54,9 +60,13 @@ body {
   top: 15vh;
   right: 15vw;
   font-size: 1.8em;
+  padding: 10px;
+  border-radius: 5%;
+  background-color: rgba(0,0,0,.2);
 }
 .flex-wrapper {
   margin-top: 30vh;
+  background-color: rgba(0,0,0,.2);
 }
 .temperature {
   opacity: 0;
