@@ -63,8 +63,10 @@
       }
       // Set weather-main class
       function setUI(data) {
+        $(".degrees").text(data.list[0].main.temp + 'º');
+        $(".clouds").html('<i class="wi ' + weatherIcons[data.list[0].weather[0].main] + '"></i>');
+        $(".wind-speed").text(data.list[0].wind.speed);
         $(".city").text(data.list[0].name);
-        $(".clouds").html('<i class="wi ' + weatherIcons[data.list[0].weather[0].main] + '"></i>')
       }
     });
   </script>
