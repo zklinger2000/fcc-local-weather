@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Zack Klinger, Web Developer, Portland, OR</title>
+  <!-- load picturefill library -->
+<!--  <script src="/lib/picturefill.min.js" async></script>-->
+  <script src="https://code.jquery.com/jquery-2.2.2.js" integrity="sha256-4/zUCqiq0kqxhZIyp4G0Gk+AOtCJsY1TA00k5ClsZYE=" crossorigin="anonymous"></script>
+  <!-- link to Font Awesome stylesheet -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- link to main stylesheet -->
+  <link rel="stylesheet" type="text/css" href="css/main.css" />
+  <!-- Unica One font -->
+  <link href='https://fonts.googleapis.com/css?family=Unica+One' rel='stylesheet' type='text/css'>
+  <!-- Vollkorn font -->
+  <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
+  </head>
+<body>
+  <div class="content-wrapper clear">
+    <div class="flex-wrapper">
+      <div class="temperature">
+        <div class="degrees">52º</div>
+        <div class="secondary-temp-info">
+          <div class="temp-wind">
+            <div class="temp-units">F</div>
+            <div class="wind-speed">23</div>
+            <div class="wind-units">mph</div>
+          </div>
+          <div class="clouds"><i class="fa fa-sun-o"></i></div>
+        </div>
+      </div>
+      <div class="city">Portland, OR</div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: 'http://api.openweathermap.org/data/2.5/find',
+        type: 'GET',
+        data: {
+          appid: '97c9a860de6de4c40a5e60bf99ea46e1',
+          lon: -122.3787,
+          lat: 45.4741
+        },
+        dataType: 'json',
+        success: success,
+        error: function(err) { alert(err); },
+        beforeSend: function(xhr) {
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-URLEncoded");
+        }
+      });
+      // Success callback
+      function success(data) {
+        console.log(data);
+        $(".city").text(data.list[0].name);
+      }
+      // Set weather-main class
+ 
+    });
+  </script>
+</body>
+</html>

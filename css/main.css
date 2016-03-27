@@ -1,0 +1,55 @@
+/*=================
+  Main Page Style
+==================*/
+* {
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Vollkorn', serif;
+  color: #eee;
+  background-color: #333;
+  font-size: 1.2em;
+  text-align: center;
+}
+.degrees, .temp-units, .clock, .wind-speed, .wind-units {
+  font-family: 'Unica One', cursive;
+}
+.degrees {
+  font-size: 6em;
+  text-shadow: 8px 10px 10px rgba(0,0,0,0.6);
+}
+.temp-units, .clouds, .city, .wind-speed, .wind-units {
+  text-shadow: 6px 8px 8px rgba(0,0,0,0.6);
+}
+.temp-units {
+  font-size: 2em;
+  padding: 0 20px
+}
+.wind-speed, .wind-units {
+  font-size: 2em;
+}
+.clouds {
+  font-size: 3em
+}
+.city {
+  font-size: 1.6em
+}
+
+
+/*=========
+  Flexbox
+==========*/
+
+.flex-wrapper {
+  margin-top: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.temperature {
+  display: flex;
+  justify-content: center;
+}
+.temp-wind {
+  display: flex;
+}
