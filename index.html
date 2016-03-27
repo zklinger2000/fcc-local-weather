@@ -63,11 +63,21 @@
       }
       // Set weather-main class
       function setUI(data) {
-        $(".degrees").text(data.list[0].main.temp + 'º');
+        $(".degrees").text(convertDegrees(data.list[0].main.temp) + 'º');
         $(".clouds").html('<i class="wi ' + weatherIcons[data.list[0].weather[0].main] + '"></i>');
         $(".wind-speed").text(data.list[0].wind.speed);
         $(".city").text(data.list[0].name);
       }
+      // Convert degrees
+      function convertDegrees(kelvins) {
+        var tempUnits = $(".temp-units").text();
+        if (tempUnits === 'F') {
+          return ((kelvins - 273.15) * 1.8 + 32);
+        } else {
+          return 99;
+        }
+      }
+      console.log(convertDegrees(284.15));
     });
   </script>
 </body>
