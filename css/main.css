@@ -53,13 +53,15 @@ body {
   right: 15vw;
   font-size: 1.8em;
 }
-
+.flex-wrapper {
+  margin-top: 30vh;
+  opacity: 0;
+}
 /*=========
   Flexbox
 ==========*/
 
 .flex-wrapper {
-  margin-top: 30vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

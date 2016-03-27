@@ -20,12 +20,12 @@
   <div class="content-wrapper clear">
     <div class="flex-wrapper">
       <div class="temperature">
-        <div class="degrees">52º</div>
+        <div class="degrees">12º</div>
         <div class="secondary-temp-info">
           <div class="temp-wind">
-            <div class="temp-units">F</div>
-            <div class="wind-speed">23</div>
-            <div class="wind-units">mph</div>
+            <div class="temp-units">C</div>
+            <div class="wind-speed">5</div>
+            <div class="wind-units">mps</div>
           </div>
           <div class="clouds"><i class="wi"></i></div>
         </div>
@@ -45,12 +45,13 @@
     $(document).ready(function() {
       // Initialize weather data
       getWeatherByLocation(lon, lat);
+      // Fade in flex-wrapper element
+      setTimeout(function() {
+        $(".flex-wrapper").fadeTo("slow", 1);
+      }, 2000);
+      
       // Add listener to toggle temp-units
       $(".temp-units").on("click", function(event) {
-        $units = $(this).text();
-        // toggle units and make new call to weather API
-        toggleTempUnits($units);
-        $(".wind-units").text($(".wind-units").text() === 'mph' ? 'mps' : 'mph');
         getWeatherByLocation(lon, lat);
       });
       
@@ -79,7 +80,10 @@
       
       // Success callback
       function success(data) {
+//        var $units = $(this).text();
+        // toggle units and make new call to weather API
         var $tempUnits = $(".temp-units").text();
+        toggleTempUnits($tempUnits, data);
         setUI(data, $tempUnits);
       }
       
@@ -106,8 +110,21 @@
       }
       
       // Toggle temp units
-      function toggleTempUnits(units) {
-        $(".temp-units").text('f' === units.toLowerCase() ? 'C' : 'F');
+      function toggleTempUnits(units, data) {
+        $(".temp-units").fadeTo(1000, 0);
+        $(".degrees").fadeTo(1000, 0);
+        $(".wind-units").fadeTo(1000, 0);
+        $(".wind-speed").fadeTo(1000, 0);
+        
+        setTimeout(function(){
+          $(".wind-units").text($(".wind-units").text() === 'mph' ? 'mps' : 'mph');          
+          $(".temp-units").text('c' === units.toLowerCase() ? 'F' : 'C');          
+          setUI(data, $(".temp-units").text());
+          $(".temp-units").fadeTo(1000, 1);
+          $(".degrees").fadeTo(1000, 1);
+          $(".wind-units").fadeTo(1000, 1);
+          $(".wind-speed").fadeTo(1000, 1);
+        }, 1000);
       }
 
     });
