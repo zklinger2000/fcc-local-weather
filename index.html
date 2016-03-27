@@ -40,11 +40,25 @@
       Rain: "wi-rain",
       Clear: "wi-day-sunny"
     }
+    var lon = -122.3787;
+    var lat = 45.4741;
     $(document).ready(function() {
+      // Initialize weather data
+      getWeatherByLocation(lon, lat);
+      // Add listener to toggle temp-units
+      $(".temp-units").on("click", function(event) {
+        $units = $(this).text();
+        // toggle units and make new call to weather API
+        toggleTempUnits($units);
+        $(".wind-units").text($(".wind-units").text() === 'mph' ? 'mps' : 'mph');
+        getWeatherByLocation(lon, lat);
+      });
       
-      getWeatherByLocation(-122.3787, 45.4741);
+      //===========
+      // Functions
+      //===========
       
-      // Get the initial weather data
+      // Call Openweather API and update UI
       function getWeatherByLocation(lon, lat) {
         $.ajax({
           url: 'http://api.openweathermap.org/data/2.5/find',
@@ -62,8 +76,6 @@
           }
         });
       }
-      
-      //
       
       // Success callback
       function success(data) {
@@ -94,11 +106,10 @@
       }
       
       // Toggle temp units
-      function toggleTempUnits() {
-        var $tempUnits = $(".temp-units");
-        $tempUnits.text('f' === $tempUnits.text().toLowerCase() ? 'C' : 'F');
+      function toggleTempUnits(units) {
+        $(".temp-units").text('f' === units.toLowerCase() ? 'C' : 'F');
       }
-//      console.log(convertDegrees(284.15));
+
     });
   </script>
 </body>
