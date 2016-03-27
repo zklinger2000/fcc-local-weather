@@ -41,43 +41,64 @@
       Clear: "wi-day-sunny"
     }
     $(document).ready(function() {
-      $.ajax({
-        url: 'http://api.openweathermap.org/data/2.5/find',
-        type: 'GET',
-        data: {
-          appid: '97c9a860de6de4c40a5e60bf99ea46e1',
-          lon: -122.3787,
-          lat: 45.4741
-        },
-        dataType: 'json',
-        success: success,
-        error: function(err) { alert(err); },
-        beforeSend: function(xhr) {
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-URLEncoded");
-        }
-      });
+      
+      getWeatherByLocation(-122.3787, 45.4741);
+      
+      // Get the initial weather data
+      function getWeatherByLocation(lon, lat) {
+        $.ajax({
+          url: 'http://api.openweathermap.org/data/2.5/find',
+          type: 'GET',
+          data: {
+            appid: '97c9a860de6de4c40a5e60bf99ea46e1',
+            lon: lon,
+            lat: lat
+          },
+          dataType: 'json',
+          success: success,
+          error: function(err) { alert(err); },
+          beforeSend: function(xhr) {
+          xhr.setRequestHeader("Content-Type", "application/x-www-form-URLEncoded");
+          }
+        });
+      }
+      
+      //
+      
       // Success callback
       function success(data) {
-        console.log(data);
-        setUI(data);
+        var $tempUnits = $(".temp-units").text();
+        setUI(data, $tempUnits);
       }
-      // Set weather-main class
-      function setUI(data) {
-        $(".degrees").text(convertDegrees(data.list[0].main.temp) + 'º');
+      
+      // Set weather-main elements
+      function setUI(data, units) {
+        $(".degrees").text(convertTempDegrees(data.list[0].main.temp, units) + 'º');
         $(".clouds").html('<i class="wi ' + weatherIcons[data.list[0].weather[0].main] + '"></i>');
-        $(".wind-speed").text(data.list[0].wind.speed);
+        $(".wind-speed").text(convertWindSpeed(data.list[0].wind.speed, units));
         $(".city").text(data.list[0].name);
       }
-      // Convert degrees
-      function convertDegrees(kelvins) {
-        var tempUnits = $(".temp-units").text();
-        if (tempUnits === 'F') {
-          return ((kelvins - 273.15) * 1.8 + 32);
+      
+      // Convert temp degrees
+      function convertTempDegrees(kelvins, units) {
+        if ('f' === units.toLowerCase()) {
+          return Math.round((kelvins - 273.15) * 1.8 + 32);
         } else {
-          return 99;
+          return Math.round(kelvins - 273.15);
         }
       }
-      console.log(convertDegrees(284.15));
+      
+      // Convert wind speed
+      function convertWindSpeed(speed, units) {
+        return Math.floor('f' === units.toLowerCase() ? (speed * 2.23694) : speed);
+      }
+      
+      // Toggle temp units
+      function toggleTempUnits() {
+        var $tempUnits = $(".temp-units");
+        $tempUnits.text('f' === $tempUnits.text().toLowerCase() ? 'C' : 'F');
+      }
+//      console.log(convertDegrees(284.15));
     });
   </script>
 </body>
