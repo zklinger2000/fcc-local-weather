@@ -11,22 +11,32 @@ body {
   font-size: 1.2em;
   text-align: center;
 }
-.degrees, .temp-units, .clock, .wind-speed, .wind-units {
+.degrees, .temp-units, .clock, .wind-speed, .wind-units, .time {
   font-family: 'Unica One', cursive;
 }
 .degrees {
   font-size: 6em;
   text-shadow: 8px 10px 10px rgba(0,0,0,0.6);
 }
-.temp-units, .clouds, .city, .wind-speed, .wind-units {
+
+.temp-units, .clouds, .city, .wind-speed, .wind-units, .time {
   text-shadow: 6px 8px 8px rgba(0,0,0,0.6);
 }
 .temp-units {
   font-size: 2em;
-  padding: 0 20px
+  min-width: 1.2em;
 }
 .wind-speed, .wind-units {
   font-size: 2em;
+}
+.wind-speed {
+  min-width: 1.3em;
+  text-align: right;
+}
+.wind-units {
+  min-width: 2em;
+  padding-left: .2em;
+  text-align: left;
 }
 .clouds {
   font-size: 3em
@@ -34,7 +44,12 @@ body {
 .city {
   font-size: 1.6em
 }
-
+.time {
+  position: absolute;
+  top: 15vh;
+  right: 15vw;
+  font-size: 1.8em;
+}
 
 /*=========
   Flexbox
