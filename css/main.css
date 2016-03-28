@@ -25,6 +25,8 @@ body {
 }
 .degrees {
   font-size: 6em;
+  min-width: 1.5em;
+  text-align: right;
   text-shadow: 6px 8px 8px rgba(0,0,0,0.6);
 }
 .temp-units, .clouds, .city, .wind-speed, .wind-units, .time {

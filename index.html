@@ -157,8 +157,10 @@
         $(".degrees").fadeTo(1000, 0);
         $(".wind-units").fadeTo(1000, 0);
         $(".wind-speed").fadeTo(1000, 0);
-        $('.content-wrapper').fadeTo(1000, 0);
         var url = weatherIcons[data.list[0].weather[0].main].url;
+        if (!$(".content-wrapper").css('background-image').slice(5, this.length - 2) == url) {
+          $('.content-wrapper').fadeTo(1000, 0);
+        }
         // Update  and fade elements back in
         setTimeout(function(){
           $(".wind-units").text($(".wind-units").text() === 'mph' ? 'mps' : 'mph');          
@@ -169,7 +171,7 @@
           $(".degrees").fadeTo(1000, 1);
           $(".wind-units").fadeTo(1000, 1);
           $(".wind-speed").fadeTo(1000, 1);
-          $('.content-wrapper').fadeTo(5000, 1);
+          $('.content-wrapper').fadeTo(3000, 1);
         }, 1000);
       }
 
