@@ -16,8 +16,9 @@
   <!-- Vollkorn font -->
   <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
   </head>
-<body class="snow">
+<body>
   <div class="content-wrapper">
+  </div>
     <div class="flex-wrapper">
       <div class="time"></div>
       <div class="temperature">
@@ -33,14 +34,28 @@
       </div>
       <div class="city">Portland, OR</div>
     </div>
-  </div>
   <script>
     var weatherIcons = {
-      Clouds: "wi-cloudy",
-      Rain: "wi-rain",
-      Clear: "wi-day-sunny",
-      Snow: "wi-snow",
-      Wind: "wi-windy"
+      Clouds: {
+        icon: "wi-cloudy",
+        url: "https://pixabay.com/static/uploads/photo/2015/09/05/20/44/sky-925197_960_720.jpg"
+      },
+      Rain: {
+        icon: "wi-rain",
+        url: "https://pixabay.com/static/uploads/photo/2015/03/26/10/06/raining-690930_960_720.jpg"
+      },
+      Clear: {
+        icon: "wi-day-sunny",
+        url: "https://pixabay.com/static/uploads/photo/2015/10/14/18/47/lofoten-988175_960_720.jpg"
+      },
+      Snow: {
+        icon: "wi-snow",
+        url: "https://pixabay.com/static/uploads/photo/2016/03/04/16/03/snowflakes-1236245_960_720.jpg"
+      },
+      Wind: {
+        icon: "wi-windy",
+        url: "https://pixabay.com/static/uploads/photo/2015/10/14/16/12/air-bag-987933_960_720.jpg"
+      }
     }
     var coords = {
       longitude: -122.645198,
@@ -55,7 +70,6 @@
       }, 1000);
       
       refreshWeather();
-      
       //===========
       // Functions
       //===========
@@ -117,7 +131,7 @@
       // Set weather-main elements
       function setUI(data, units) {
         $(".degrees").text(convertTempDegrees(data.list[0].main.temp, units) + 'º');
-        $(".clouds").html('<i class="wi ' + weatherIcons[data.list[0].weather[0].main] + '"></i>');
+        $(".clouds").html('<i class="wi ' + weatherIcons[data.list[0].weather[0].main].icon + '"></i>');
         $(".wind-speed").text(convertWindSpeed(data.list[0].wind.speed, units));
         $(".city").text(data.list[0].name);
       }
@@ -143,15 +157,19 @@
         $(".degrees").fadeTo(1000, 0);
         $(".wind-units").fadeTo(1000, 0);
         $(".wind-speed").fadeTo(1000, 0);
+        $('.content-wrapper').fadeTo(1000, 0);
+        var url = weatherIcons[data.list[0].weather[0].main].url;
         // Update  and fade elements back in
         setTimeout(function(){
           $(".wind-units").text($(".wind-units").text() === 'mph' ? 'mps' : 'mph');          
-          $(".temp-units").text('c' === units.toLowerCase() ? 'F' : 'C');          
+          $(".temp-units").text('c' === units.toLowerCase() ? 'F' : 'C');
+          $('.content-wrapper').css('background-image', 'url(' + url + ')');
           setUI(data, $(".temp-units").text());
           $(".temp-units").fadeTo(1000, 1);
           $(".degrees").fadeTo(1000, 1);
           $(".wind-units").fadeTo(1000, 1);
           $(".wind-speed").fadeTo(1000, 1);
+          $('.content-wrapper').fadeTo(5000, 1);
         }, 1000);
       }
 
